@@ -3,7 +3,7 @@
 namespace App\Exceptions;
 
 use App\Lib\HttpStatus;
-use App\Lib\JsonResponse;
+use App\Lib\JSON;
 
 class BaseException extends \Exception
 {
@@ -20,7 +20,7 @@ class BaseException extends \Exception
 
     public function getExceptionResponse()
     {
-        return JsonResponse::jsonResponse(
+        return JSON::response(
             array(
                 "error" => [
                     "type" => $this->exceptionType,

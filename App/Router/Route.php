@@ -6,7 +6,7 @@ use App\Exceptions\RouteException;
 use App\Router\Validations\RouteValidations as Validator;
 use App\Router\Params\Url\RouteUrlParams;
 use App\Router\Params\Body\BodyParams;
-use App\Lib\JsonResponse;
+use App\Lib\JSON;
 
 class Route{
      
