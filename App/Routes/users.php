@@ -1,10 +1,7 @@
 <?php 
 
 namespace App\Routes;  
-use App\Router\Route;
+use App\Controller\Users;
 
-$route = new Route($subRoute);
-$route->get(':id', [], []);
-$route->get('daniel/id/:id', [], []);
-$route->get('daniel/teste/:id', [], []);
-$route->get('usuario/:nome/:id', [], []);
+$route->get('daniel/:id', [Users::class, "listarUsuario"], []);
+$route->post('lkz/:nome/:id', [Users::class, "listarUsuario"], []);

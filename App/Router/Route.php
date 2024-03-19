@@ -2,25 +2,46 @@
 
 namespace App\Router;
 
+use App\Lib\JSON;
 use App\Exceptions\RouteException;
+use App\Middleware\MiddlewareExecuter;
+use App\Router\Params\Body\BodyParams;
 use App\Router\Validations\RouteValidations as Validator;
 use App\Router\Params\Url\RouteUrlParams;
-use App\Router\Params\Body\BodyParams;
-use App\Lib\JSON;
 
 class Route{
      
-    private string  $requestHttpMethod;
-    public string $requestedRoute;
-    private string $httpMethodToExecute;
-    private RouteUrlParams $requestUrlParams;
     private BodyParams $requestBody;
+    private RouteUrlParams $requestUrlParams; 
+
+    private bool $hasExecutedRoute;
+    public string $requestedRoute;
+    private string $requestHttpMethod;
+    private string $httpMethodToExecute;
+    private array $httpMethods = [
+        "get" => "GET",
+        "post" => "POST",
+        "put" => "PUT",
+        "patch" => "PATCH",
+        "delete" => "DELETE",
+        "options" => "OPTIONS",
+        "head" => "HEAD"
+    ];
 
     public function __construct(string $requestedRoute) {
+        $this->setHasExecutedRoute(false);
         $this->requestUrlParams = new RouteUrlParams();
         $this->requestBody = new BodyParams();
         $this->setRequestHttpMethod();
         $this->setRequestedRoute($requestedRoute);
+    }
+
+    private function setHasExecutedRoute(bool $value): void{
+        $this->hasExecutedRoute = $value;
+    }
+
+    public function hasExcutedRoute(): bool{
+        return $this->hasExecutedRoute;
     }
 
     private function setRequestHttpMethod(): void{
@@ -32,62 +53,31 @@ class Route{
         $this->requestedRoute = !empty($requestedRoute) ? $requestedRoute : '/';
     }
 
-    public function get(string $route, array $routeMethod, array $middlewares = []){
-        $this->httpMethodToExecute = 'GET';
-        $this->executeRoute($route, $routeMethod, $middlewares);
-    } 
+    public function __call(string $method, array $params){
+        if(array_key_exists($method, $this->httpMethods) == false){
+            throw new RouteException("Invalid HTTP Method!", INTERNAL_SERVER_ERROR);
+        }
 
-    public function post(string $route, array $routeMethod, array $middlewares = []){
-        $this->httpMethodToExecute = 'POST';
-        $this->executeRoute($route, $routeMethod, $middlewares);
-
-    }
-
-    public function put(string $route, array $routeMethod, array $middlewares = []){
-        $this->httpMethodToExecute = 'PUT';
-        $this->executeRoute($route, $routeMethod, $middlewares);
-
-    }
-
-    public function patch(string $route, array $routeMethod, array $middlewares = []){
-        $this->httpMethodToExecute = 'PATCH';
-        $this->executeRoute($route, $routeMethod, $middlewares);
-
-    }
-
-    public function delete(string $route, array $routeMethod, array $middlewares = []){
-        $this->httpMethodToExecute = 'DELETE';
-        $this->executeRoute($route, $routeMethod, $middlewares);
-    }
-
-    private function executeRoute(string $route, array $routeMethod, array $middlewares = []){
-        if($this->isToExecuteRoute($route)){
-            $this->requestUrlParams->setUrlParams($route, $this->requestedRoute);
-            // $this->requestBody->set
-            var_dump($this->requestUrlParams->getUrlParams());die;
-            if(!empty($middlewares)){
-                $this->runMiddlewares($middlewares);
-                // Run
-            }
+        if(Validator::calledFunctionHasValidParameters($params)){
+            $this->httpMethodToExecute = $this->httpMethods[$method];
+            $middlewares = isset($params[2]) ? $params[2] : [];
+            $this->executeRoute($params[0], $params[1], $middlewares);
         }
     }
 
-    private function runMiddlewares(array $middlewares){
-
-        //validate middleware array key
-        // key should have middleware name class, function
-        //run middleware after validation
-        //middleware can exit aplication if its results are not true
-        //after running an middleware prepare request to send to controller
-        //send request to controller instance and run the controller method
-
-        try{
-
+    private function executeRoute(string $route, array $toExecute, array $middlewares = []): void{
+        if($this->isToExecuteRoute($route) == false){
+            return;
         }
-        catch(RouteException $e){
-
-        }
+        new MiddlewareExecuter($middlewares);
+        $this->setHasExecutedRoute(true); 
+        $this->requestUrlParams->setUrlParams($route, $this->requestedRoute);
+        $controller = $toExecute[0];
+        $method = $toExecute[1];
+        (new $controller())->$method;
     }
+
+
 
     private function isToExecuteRoute(string $functionRoute): bool{
         if(Validator::routeHttpMethodIsDifferentFromRequest($this->httpMethodToExecute, $this->requestHttpMethod)){

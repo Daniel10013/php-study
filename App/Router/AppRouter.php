@@ -2,12 +2,13 @@
 
 namespace App\Router;
 
+use App\Router\Route;
 use App\Lib\HttpStatus;
 use App\Lib\HtmlResponses;
+use App\Exceptions\RouteException;
 
 class AppRouter
 {
-
     // The main route is the route file name ex: users.php
 
     private string $mainRoute;
@@ -49,10 +50,22 @@ class AppRouter
         }
 
         $routeFile = 'App\\Routes\\' . $this->mainRoute . '.php';
-        extract(['subRoute' => $this->subRoute]);
         ob_start();
-        require_once($routeFile);
+        $this->executeRoute($routeFile);
         ob_end_clean();
+    }
+
+    private function executeRoute(string $routeFile): void {
+        try{
+            $route = new Route($this->subRoute);
+            require_once($routeFile);
+            if($route->hasExcutedRoute() == false){
+                $this->redirectToNotFound();
+            }
+        } catch (RouteException $exception){
+            echo $exception->getExceptionResponse();
+            exit();
+        }
     }
 
     private function routeFileExists(): bool
