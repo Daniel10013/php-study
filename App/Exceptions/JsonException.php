@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Exceptions\BaseException;
+use App\Core\Exceptions\BaseException;
 
 class JsonException extends BaseException{
     public function __construct(string $message, int $statusCode){

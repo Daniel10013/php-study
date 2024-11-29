@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Core\Exceptions;
 
 use App\Lib\HttpStatus;
 use App\Lib\JSON;
@@ -11,8 +11,9 @@ class BaseException extends \Exception
     protected $serverStatusCode;
     protected $exceptionType;
 
-    public function __construct(string $message, int $statusCode)
+    public function __construct(string $message, int $statusCode, string $exceptionType = null)
     {
+        $this->exceptionType = $exceptionType;
         $this->message = $message;
         $this->serverStatusCode = $statusCode;
         HttpStatus::changeHttpStatus($this->serverStatusCode);

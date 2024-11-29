@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Router\Validations;
+namespace App\Core\Router\Validations;
 
 class ParamsValidations{
     

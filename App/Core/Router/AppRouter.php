@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Router;
+namespace App\Core\Router;
 
-use App\Router\Route;
-use App\Lib\HttpStatus;
-use App\Lib\HtmlResponses;
-use App\Exceptions\RouteException;
+use App\Core\Router\Route;
+use App\Lib\DefaultResponses;
+use App\Core\Exceptions\BaseException;
 
 class AppRouter
 {
@@ -45,11 +44,12 @@ class AppRouter
         if ($this->mainRoute == '') {
             return $this->redirectToMainRoute();
         }
-        if (!$this->routeFileExists()) {
-            return $this->redirectToNotFound();
+
+        $routeFile = 'App\\Http\\Routes\\' . $this->mainRoute . '.php';
+        if ($this->routeFileExists($routeFile) == false) {
+            DefaultResponses::serverNotFound();
         }
 
-        $routeFile = 'App\\Routes\\' . $this->mainRoute . '.php';
         ob_start();
         $this->executeRoute($routeFile);
         ob_end_clean();
@@ -59,35 +59,23 @@ class AppRouter
         try{
             $route = new Route($this->subRoute);
             require_once($routeFile);
+
             if($route->hasExcutedRoute() == false){
-                $this->redirectToNotFound();
+                DefaultResponses::serverNotFound();
             }
-        } catch (RouteException $exception){
+        } catch (BaseException $exception){
             echo $exception->getExceptionResponse();
             exit();
         }
     }
 
-    private function routeFileExists(): bool
+    private function routeFileExists(string $routeFilePath): bool
     {
-        $baseDir = str_replace('Router', 'Routes', __DIR__);
-        $routeFilePath = $baseDir . '/' . $this->mainRoute . '.php';
-        if (!file_exists($routeFilePath)) {
-            return false;
-        }
-
-        return true;
+        return file_exists($routeFilePath);
     }
 
     private function redirectToMainRoute(): void
     {
         echo 'The API docs can be found on the read.me file!';
-    }
-
-    private function redirectToNotFound(): void
-    {
-        echo HtmlResponses::serverNotFound();
-        HttpStatus::changeHttpStatus(NOT_FOUND);
-        exit();
     }
 }

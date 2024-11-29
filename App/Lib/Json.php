@@ -3,6 +3,7 @@
 namespace App\Lib;
 
 use stdClass;
+use App\Exceptions\JsonException;
 
 class JSON{
 
@@ -11,7 +12,11 @@ class JSON{
         return json_encode($content);
     }
 
-    public static function getJsonIfIsValid(string $text): stdClass | NULL{
-        return json_decode($text);
+    public static function decode(string $text): stdClass | NULL{
+        $decodedText = json_decode($text);
+        if(json_last_error()){
+            throw new JsonException(json_last_error_msg(), BAD_REQUEST);
+        }
+        return $decodedText == null ? "" : $decodedText;
     }
 }

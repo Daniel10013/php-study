@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Exceptions\BaseException;
+use App\Core\Exceptions\BaseException;
 
 class RouteException extends BaseException{
 

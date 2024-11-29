@@ -2,7 +2,7 @@
 
 namespace App\Exceptions\Database;
 
-use App\Exceptions\BaseException;
+use App\Core\Exceptions\BaseException;
 
 class DatabaseConnection extends BaseException{
 

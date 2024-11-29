@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Router\Params\Url;
+namespace App\Core\Router\Params\Url;
 
 
 use App\Exceptions\RouteException;
-use App\Router\Validations\ParamsValidations as ParamValidator;
+use App\Core\Router\Validations\ParamsValidations as ParamValidator;
 
 class RouteUrlParams{
 
@@ -31,7 +31,7 @@ class RouteUrlParams{
         if(!ParamValidator::routesHaveSameLenght($splitedRequestedRoute, $splitedRoute)){
             throw new RouteException('Invalid route requested', NOT_ACCEPTABLE);
         }
-    
+        
         $getParams = [];
         foreach($splitedRoute as $key => $route){
             if(ParamValidator::isParam($route)){

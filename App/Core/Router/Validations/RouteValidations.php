@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Router\Validations;
+namespace App\Core\Router\Validations;
 
 use App\Exceptions\RouteException;
-use App\Router\Validations\ParamsValidations;
+use App\Core\Router\Validations\ParamsValidations;
 
 class RouteValidations{
-    public static function routeHttpMethodIsDifferentFromRequest(string $httpMethod, string $requestedHttpMethod): bool{
+    public static function routeHttpMethodIsDifferentFromRequest(string $httpMethod, string $requestedHttpMethod): bool{ 
         return $httpMethod != $requestedHttpMethod;
     }
 
     public static function requestRouteAndFunctionRoutesAreEqual(string $functionRoute, string $requestedRoute): bool{
         $splitedRoute = self::getSplitedRoute($functionRoute);
         $splitedRequestedRoute = self::getSplitedRoute($requestedRoute);
-        if(!ParamsValidations::routesHaveSameLenght($splitedRequestedRoute, $splitedRoute)){
+
+        if(ParamsValidations::routesHaveSameLenght($splitedRequestedRoute, $splitedRoute) == false){
             return false;
         }        
         
@@ -24,11 +25,12 @@ class RouteValidations{
         }
 
         $implodedRequestedRoute = implode('/', $splitedRequestedRoute);
-        return $functionRoute === $implodedRequestedRoute;
+        return ltrim($functionRoute, "/") === $implodedRequestedRoute;
     }
 
     private static function getSplitedRoute(string $route): array{
-        return explode('/', $route);
+        $dataToReturn = array_filter(explode('/', $route));
+        return array_values($dataToReturn);
     }
 
     public static function calledFunctionHasValidParameters(array $params): bool{
@@ -52,8 +54,7 @@ class RouteValidations{
 
     private static function receveidClassIsInstanceOfController(string $class){
         if(class_exists($class)){
-            $classInstance = new $class;
-            return $classInstance instanceof \App\Controller\Controller;
+            return is_subclass_of($class ,"\App\Core\Controller\Controller");
         }
         return false;
     }

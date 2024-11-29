@@ -12,4 +12,3 @@ class EnvironmentData
         return '';
     }
 }
-?>
