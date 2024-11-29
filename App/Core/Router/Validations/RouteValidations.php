@@ -54,7 +54,7 @@ class RouteValidations{
     }
 
     private static function receveidClassIsInstanceOfController(string $class){
-        if(str_contains("Controller", $class)){
+        if(str_contains($class, "Controller") == false){
             DefaultResponses::badRequest("Controller class name should have the word 'Controller'");
         }
         if(class_exists($class)){
