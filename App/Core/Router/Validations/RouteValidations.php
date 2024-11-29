@@ -4,6 +4,7 @@ namespace App\Core\Router\Validations;
 
 use App\Exceptions\RouteException;
 use App\Core\Router\Validations\ParamsValidations;
+use App\Lib\DefaultResponses;
 
 class RouteValidations{
     public static function routeHttpMethodIsDifferentFromRequest(string $httpMethod, string $requestedHttpMethod): bool{ 
@@ -53,6 +54,9 @@ class RouteValidations{
     }
 
     private static function receveidClassIsInstanceOfController(string $class){
+        if(str_contains("Controller", $class)){
+            DefaultResponses::badRequest("Controller class name should have the word 'Controller'");
+        }
         if(class_exists($class)){
             return is_subclass_of($class ,"\App\Core\Controller\Controller");
         }
