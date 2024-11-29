@@ -18,7 +18,6 @@ class Model{
 
     public function __construct(){
         if(empty($this->table) == true){
-            $className = $this::class;
             throw new BaseException("Missing table name on model", BAD_REQUEST, "model_config");
         }
         $this->connection = (new DatabaseConnection())->getConnection();
