@@ -85,7 +85,7 @@ class Model{
         return $this->rawQuery($query, $values);
     }
 
-    public function exists(mixed $value, $field = 'id'): bool{
+    public function exists(mixed $value, string $field = 'id'): bool{
         $query = "SELECT * FROM {$this->table} WHERE `{$field}` = ?";
         $result = $this->rawQuery($query, $value);
         return count($result) > 0;
