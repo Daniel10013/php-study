@@ -48,7 +48,7 @@ class Model{
         return $this->rawQuery($query, $id);
     }
 
-    public function create($dataToCreate): bool{
+    public function create(array $dataToCreate): bool{
         if(empty($dataToCreate)){
             DefaultResponses::badRequest("Invalid create data!");
         }
