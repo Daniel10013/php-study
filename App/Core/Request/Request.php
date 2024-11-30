@@ -21,6 +21,7 @@ class Request{
     }
 
     private function setUrlParams(RouteUrlParams $urlData): void{
+        $this->url = new stdClass();
         if(empty($urlData->urlParams)){
             return;
         }   
