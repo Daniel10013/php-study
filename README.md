@@ -9,10 +9,10 @@ This is an simple REST API template with an modern pattern made with pure **PHP*
 - [Getting Started With the Project](#getting-started-with-the-project)
 - [Folder Structure](#folder-structure)
 - [Basic workflow of the code](#how-the-application-works)
-- [Creating your own routes](#creating-your-own-routes)
+- [Creating your own routes](#creating-routes)
 - [Creating requests and validation rulesets](#requests)
 - [Setting your Middlewares](#creating-middlewares)
-- [Setting your Controllers objects](#creating-controller)
+- [Setting your Controllers objects](#creating-controllers)
 - [Sending results as responses](#sending-responses)
 - [Setting your Business objects](#creating-business)
 - [Setting your Model objects](#creating-models)
@@ -54,7 +54,7 @@ If you followed the last steps correctly, you can go to the base url of your pro
 The API docs can be found on the read.me file!
 ```
 
-Folder Structure 
+## Folder Structure 
 <div align="right">
     <b><a href="#rest-api-template">↑ Back to Top</a></b>
 </div>
