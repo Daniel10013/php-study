@@ -269,7 +269,11 @@ class MiddlewareName{
 
 To use the middleware you need to use the class name as the third parameter in the route function;
 
-## Creating controllers
+## Creating Controllers
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
+
 
 Every controller in the project need to be inside the `App\Http\Controller` folder, use the `namespace App\Http\Controller`, have the word 'Controller' in the name and **needs** to extends the default controller
  
