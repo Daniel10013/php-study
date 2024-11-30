@@ -8,7 +8,7 @@ This is an simple REST API template with an modern pattern made with pure **PHP*
 ### In this documentation you're going to find the following topics:
 - [Getting Started With the Project](#getting-started-with-the-project)
 - [Folder Structure](#folder-structure)
-- [Basic workflow of the code](#basic-workflow-of-the-code)
+- [Basic workflow of the code](#how-the-application-works)
 - [Creating your own routes](#creating-your-own-routes)
 - [Creating requests and validation rulesets](#requests)
 - [Setting your Middlewares](#creating-middlewares)
@@ -18,7 +18,10 @@ This is an simple REST API template with an modern pattern made with pure **PHP*
 - [Setting your Model objects](#creating-models)
 - [Using the query helper from the base model](#using-the-query-helper-from-the-base-model)
 
-## Getting Started With the Project 
+## Getting Started With the Project  
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
 
 Before you start to develop and use the project template, you need to set up some configs in order to make your project work.
 
@@ -51,11 +54,14 @@ If you followed the last steps correctly, you can go to the base url of your pro
 The API docs can be found on the read.me file!
 ```
 
-## Folder Structure
+Folder Structure 
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
 
 For this project i've used one very used folder structure, and as I said this project was made based on **Laravel**, so you'll be able to find somethings closer to it
 
-#### This is how the folder structure looks like: 
+##This is how the folder structure looks like: 
     App
     ├── Business
     ├── Config
@@ -69,7 +75,7 @@ For this project i've used one very used folder structure, and as I said this pr
     ├── Lib
     └── Model
 
-### Core
+#Core
 The core folder contains all the base code that the application needs to work well, it cointains the base files for controllers, models, request, response etc.
 This folder also contains the **router** of the application. **You don't need to do anything in this folder, except if you want to change how the application works**
 
@@ -97,6 +103,10 @@ Contains the functions to manipulate and interact with the database. The base mo
 You can creat your own exceptions to use and handle with the errors the way you like more, also in this project you need to use the class `BaseException` as the default exception object
 
 ## How the application works 
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
+
 The basic workflow of the application is very easy to understand, it's like one linear line that can be represented like this:
 
 ```text
@@ -111,7 +121,10 @@ If the validation succeds the appliaction will check the middlewares, if there's
 
 That's basically how the code works, of course there's other things like using the Business and the Model, but this will be explained later.
 
-## Creating routes
+## Creating routes 
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
 
 The routing system in this application template works based on rest patters, in other words you can create requests on all the common http methods, the available mthods are: 
 
@@ -146,6 +159,10 @@ $route->post('test/:id', [UsersController::class, "listUsers"], ["Auth"]);
 And if you want to use and diferent http method, you can just call `$route->get()` and pass the parameters.
 
 ## Requests
+
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
 
 As explained in the explanation about the program flow section, when one route is accessed, one `Request` object instance is created, the request have 3 properties that can be usefull while developing
 * **StdClass $body**  
@@ -230,6 +247,10 @@ Here is one example on how to create the `array` inside the `fieldName`
 
 ## Creating Middlewares
 
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
+
 The middleware works pretty simple in this project, every middleware class needs to be in the `App\Http\Middlewares` folder, and use the `namespace App\Http\Middleware`
 
 Your class need to have this structure
@@ -275,6 +296,9 @@ The controller have two attribute by default
     You can use to get call the business related to this controller (if it exists), the controller try to find the business on the `__construct()` function
 
 ## Sending responses
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
 
 To send responses to the client after finishing the execution of your code, you can use the class `App\Core\Response\Response` and use the function `send`, like this:
 
@@ -291,6 +315,9 @@ Response::send(array $json, int $status_code): void
 
 
 ## Creating Business
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
 
 Every business in the project need to be inside the `App\Business` folder, use the `namespace App\Business`, have the word 'Business' in the name and **needs** to extends the default `business`
  
@@ -313,6 +340,9 @@ The business have one attribute by default
     You use the model related to this business (if it exists), the business try to find the model on the `__construct()` function, and returns `null` in case it dont exists
 
 ## Creating Models
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
 
 Every model in the project need to be inside the `App\Model` folder, use the `namespace App\Model`, have the word 'Model' in the name and **needs** to extends the default `Model`, or else the class won't do nothing
 
@@ -331,6 +361,9 @@ class UsersModel extends Model{
 ```
 
 ## Using the query helper from the base model
+<div align="right">
+    <b><a href="#rest-api-template">↑ Back to Top</a></b>
+</div>
 
 In the default model you'll have a couple of functions that you can use to fastly interact with your database
  
