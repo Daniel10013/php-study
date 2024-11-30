@@ -62,6 +62,7 @@ The API docs can be found on the read.me file!
 For this project i've used one very used folder structure, and as I said this project was made based on **Laravel**, so you'll be able to find somethings closer to it
 
 ##This is how the folder structure looks like: 
+
     App
     ├── Business
     ├── Config
