@@ -28,7 +28,6 @@ class RequestValidator{
     private function validateData(): void{
         foreach($this->rules as $field => $ruleSet){
             if(array_key_exists($field, $this->dataToValidate) == false){
-                // TERMINAR DE TESTAR DADOS
                 $this->sendError("Field {$field} was not found in the received data!");
             }
 
@@ -41,7 +40,6 @@ class RequestValidator{
                 }
             }
         }
-        die();
     }
 
     private function validate(string $key, string $rule, string $field): bool{
