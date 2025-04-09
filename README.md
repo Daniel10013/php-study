@@ -61,7 +61,7 @@ The API docs can be found on the read.me file!
 
 For this project i've used one very used folder structure, and as I said this project was made based on **Laravel**, so you'll be able to find somethings closer to it
 
-##This is how the folder structure looks like: 
+## This is how the folder structure looks like: 
 
     App
     ├── Business
@@ -76,7 +76,7 @@ For this project i've used one very used folder structure, and as I said this pr
     ├── Lib
     └── Model
 
-#Core
+# Core
 The core folder contains all the base code that the application needs to work well, it cointains the base files for controllers, models, request, response etc.
 This folder also contains the **router** of the application. **You don't need to do anything in this folder, except if you want to change how the application works**
 
