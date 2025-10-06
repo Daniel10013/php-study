@@ -3,7 +3,7 @@
 
 This is an simple REST API template with an modern pattern made with pure **PHP**, with possibilities to, define more secure routes, handle the request with middlewares, set an ruleset for the request data, create, 
 
-#### This project was creadted from the scratch using [Laravel](https://laravel.com/) as inspiration!
+#### This project was created from the scratch using [Laravel](https://laravel.com/) as inspiration!
 
 ### In this documentation you're going to find the following topics:
 - [Getting Started With the Project](#getting-started-with-the-project)
