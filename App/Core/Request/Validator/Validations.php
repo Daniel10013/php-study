@@ -19,7 +19,7 @@ class Validations{
     }   
 
     public static function email(mixed $value): bool{
-        return filter_var($value, FILTER_VALIDATE_EMAIL);;
+        return filter_var($value, FILTER_VALIDATE_EMAIL);
     } 
 
     public static function boolean(mixed $value): bool{
